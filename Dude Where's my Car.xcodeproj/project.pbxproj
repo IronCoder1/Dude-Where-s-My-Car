@@ -13,6 +13,10 @@
 		6C6114021CE4C8C6003F1F61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C6114001CE4C8C6003F1F61 /* Main.storyboard */; };
 		6C6114041CE4C8C6003F1F61 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C6114031CE4C8C6003F1F61 /* Assets.xcassets */; };
 		6C6114071CE4C8C6003F1F61 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C6114051CE4C8C6003F1F61 /* LaunchScreen.storyboard */; };
+		6CD0AD2A1CE4E06800563A87 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CD0AD291CE4E06800563A87 /* Location.m */; };
+		6CD0AD2B1CE4E97500563A87 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CD0AD261CE4DB8400563A87 /* CoreLocation.framework */; };
+		6CD0AD2C1CE4E97E00563A87 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CD0AD241CE4DB7E00563A87 /* MapKit.framework */; };
+		6CD0AD2E1CE6162F00563A87 /* locations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 6CD0AD2D1CE6162F00563A87 /* locations.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,11 @@
 		6C6114031CE4C8C6003F1F61 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6C6114061CE4C8C6003F1F61 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6C6114081CE4C8C6003F1F61 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6CD0AD241CE4DB7E00563A87 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		6CD0AD261CE4DB8400563A87 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		6CD0AD281CE4E06800563A87 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		6CD0AD291CE4E06800563A87 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		6CD0AD2D1CE6162F00563A87 /* locations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = locations.gpx; path = ../../../Downloads/locations.gpx; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CD0AD2C1CE4E97E00563A87 /* MapKit.framework in Frameworks */,
+				6CD0AD2B1CE4E97500563A87 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +53,9 @@
 		6C6113EB1CE4C8C6003F1F61 = {
 			isa = PBXGroup;
 			children = (
+				6CD0AD2D1CE6162F00563A87 /* locations.gpx */,
+				6CD0AD261CE4DB8400563A87 /* CoreLocation.framework */,
+				6CD0AD241CE4DB7E00563A87 /* MapKit.framework */,
 				6C6113F61CE4C8C6003F1F61 /* Dude Where's my Car */,
 				6C6113F51CE4C8C6003F1F61 /* Products */,
 			);
@@ -62,6 +76,8 @@
 				6C6113FB1CE4C8C6003F1F61 /* AppDelegate.m */,
 				6C6113FD1CE4C8C6003F1F61 /* ViewController.h */,
 				6C6113FE1CE4C8C6003F1F61 /* ViewController.m */,
+				6CD0AD281CE4E06800563A87 /* Location.h */,
+				6CD0AD291CE4E06800563A87 /* Location.m */,
 				6C6114001CE4C8C6003F1F61 /* Main.storyboard */,
 				6C6114031CE4C8C6003F1F61 /* Assets.xcassets */,
 				6C6114051CE4C8C6003F1F61 /* LaunchScreen.storyboard */,
@@ -138,6 +154,7 @@
 			files = (
 				6C6114071CE4C8C6003F1F61 /* LaunchScreen.storyboard in Resources */,
 				6C6114041CE4C8C6003F1F61 /* Assets.xcassets in Resources */,
+				6CD0AD2E1CE6162F00563A87 /* locations.gpx in Resources */,
 				6C6114021CE4C8C6003F1F61 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,6 +168,7 @@
 			files = (
 				6C6113FF1CE4C8C6003F1F61 /* ViewController.m in Sources */,
 				6C6113FC1CE4C8C6003F1F61 /* AppDelegate.m in Sources */,
+				6CD0AD2A1CE4E06800563A87 /* Location.m in Sources */,
 				6C6113F91CE4C8C6003F1F61 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +316,7 @@
 				6C61140D1CE4C8C6003F1F61 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

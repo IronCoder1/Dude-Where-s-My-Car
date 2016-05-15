@@ -7,8 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
+#import "Location.h"
 
-@interface ViewController : UIViewController
+
+@interface ViewController : UIViewController<CLLocationManagerDelegate,MKMapViewDelegate>
+@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+
+
+@property (strong, nonatomic) Location  *myLocation;
+
+@property (strong, nonatomic) Location *savedLocation;
 
 
 @end
