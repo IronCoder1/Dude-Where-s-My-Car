@@ -11,7 +11,8 @@
 
 @interface ViewController ()
 @property (strong, nonatomic) CLLocationManager *locMgr;
-
+@property (nonatomic, strong) MKPolylineView *lineView;
+@property (nonatomic, strong) MKPolyline *polyline;
 - (IBAction)helpDrop:(id)sender;
 - (IBAction)findCar:(id)sender;
 
@@ -24,12 +25,45 @@
     self.myLocation = [[Location alloc]init];
 }
 
+
+- (void)drawLineSubroutine {
+    
+    // remove polyline if one exists
+    [self.mapView removeOverlay:self.polyline];
+    
+    // create an array of coordinates from allPins
+//    CLLocationCoordinate2D coordinates[self.allPins.count];
+//    int i = 0;
+//    for (Pin *currentPin in self.allPins) {
+//        coordinates[i] = currentPin.coordinate;
+//        i++;
+//    }
+    
+    // create a polyline with all cooridnates
+    MKPolyline *polyline = [MKPolyline polylineWithCoordinates: self.myLocation.currentCoord];
+    [self.mapView addOverlay:polyline];
+    self.polyline = polyline;
+    
+    // create an MKPolylineView and add it to the map view
+    self.lineView = [[MKPolylineView alloc]initWithPolyline:self.polyline];
+    self.lineView.strokeColor = [UIColor redColor];
+    self.lineView.lineWidth = 5;
+    
+    // for a laugh: how many polylines are we drawing here?
+    self.title = [[NSString alloc]initWithFormat:@"%lu", (unsigned long)self.mapView.overlays.count];
+    
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)mapView viewForOverlay:(id<MKOverlay>)overlay {
+    
+    return self.lineView;
+}
+
+
 -(void)viewDidAppear:(BOOL)animated{
-    self.savedLocation = [[Location alloc]init];
     
-   self.locMgr = [[CLLocationManager alloc]init];
+    self.locMgr = [[CLLocationManager alloc]init];
     [self.locMgr requestAlwaysAuthorization];
-    
     _mapView.delegate = self;
     
 }
@@ -37,17 +71,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-//-(void)dropPin:(CLLocationCoordinate2D *)currentLocation{
-//    MKPointAnnotation *pinPoint = [[MKPointAnnotation alloc]init];
-//    
-//    
-//    [self.mapView addAnnotation:pinPoint];
-//    
-//   // pinPoint.coordinate = self.myLocation.currentCoord;
-//    
-//    
-//}
 
 -(void)mapView:(MKMapView *)mapView didUpdateUserLocation:(nonnull MKUserLocation *)userLocation{
     
@@ -67,9 +90,8 @@
     
     pinPoint.coordinate = self.myLocation.currentCoord;
     
-    pinPoint.title = @"Park Car";
+    pinPoint.title = @"Parked Here";
 
-    
     [self.mapView addAnnotation:pinPoint];
 
     [self saveLoc];
@@ -77,22 +99,33 @@
 
 - (IBAction)findCar:(id)sender {
     
-    if (self.savedLocation != self.myLocation) {
-    
-    MKPointAnnotation *pinPoint = [[MKPointAnnotation alloc]init];
-    
-    pinPoint.coordinate = self.savedLocation.savedParkingCoord;
-    
-    pinPoint.title = @"Park Car";
-    
-    [self loadLoc];
-    [self.mapView addAnnotation:pinPoint];
-    } else{
+    if (self.myLocation.currentCoord.latitude != self.myLocation.savedParkingCoord.latitude) {
         
-       // [self helpDrop:nil];
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(self.myLocation.savedParkingCoord, 800, 800);
+        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+        [self loadLoc];
+        
+    } else{
+        MKPointAnnotation *pinPoint = [[MKPointAnnotation alloc]init];
+        
+        pinPoint.coordinate = self.myLocation.currentCoord;
+        
+        pinPoint.title = @"Dude you are either sitting in your car or you happen to have beat the odds and parked your car on the same latitudinal line on the equator but find your longitude if you are not drrunk!!!!";
+         
+        [self.mapView addAnnotation:pinPoint];
     }
 }
 
+- (void)drawLine {
+MKPolyline *polyline = [MKPolyline polylineWithCoordinates:self.myLocation.currentCoord count:2];
+[self.mapView addOverlay:polyline];
+
+// create an MKPolylineView and add it to the map view
+self.lineView = [[MKPolylineView alloc]initWithPolyline:self.polyline];
+self.lineView.strokeColor = [UIColor redColor];
+self.lineView.lineWidth = 5;
+    
+}
 -(NSURL*)applicationDocumentDirectory{
     
    //return
@@ -107,7 +140,7 @@
     
     NSData *theData = [NSKeyedArchiver archivedDataWithRootObject:self.myLocation];
     [theData writeToFile:thePath atomically:YES];
-    self.savedLocation.savedParkingCoord =  self.savedLocation.currentCoord;
+    self.myLocation.savedParkingCoord =  self.myLocation.currentCoord;
     
     
 }
@@ -118,7 +151,7 @@
     NSData *myData = [NSData dataWithContentsOfFile:thePath];
     
     
-    _savedLocation = [NSKeyedUnarchiver unarchiveObjectWithData:myData];
+    _myLocation = [NSKeyedUnarchiver unarchiveObjectWithData:myData];
     
 }
 
